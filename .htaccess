@@ -1,0 +1,26 @@
+# Désactiver l'index des répertoires
+Options -Indexes
+
+# Activer la réécriture d'URL
+RewriteEngine On
+RewriteBase /
+
+# Rediriger toutes les demandes vers le point d'entrée principal (index.html)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.html [QSA,L]
+
+# Bloquer l'accès à certains fichiers sensibles
+<FilesMatch "(^\.htaccess|\.gitignore|\.env)">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Autoriser l'accès aux fichiers d'images et d'assets
+<FilesMatch "\.(jpg|jpeg|png|gif|svg|ico|woff|woff2|ttf|eot)$">
+    Allow from all
+    Satisfy Any
+</FilesMatch>
+
+# Définir le type de fichier par défaut
+DefaultType text/html
